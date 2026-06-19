@@ -1,5 +1,4 @@
 'use client'
-import Login from "@/components/login";
 import Link from "next/link";
 
 export default function Home() {
