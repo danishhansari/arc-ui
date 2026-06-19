@@ -10,7 +10,7 @@ import { Field } from './ui/field'
 export function Login() {
     const [email, setEmail] = useState('')
     const [otp, setOtp] = useState('')
-    const [otpSent, setOtpSent] = useState(true)
+    const [otpSent, setOtpSent] = useState(false)
     const [loading, setLoading] = useState(false)
 
     const sendEmail = async () => {
