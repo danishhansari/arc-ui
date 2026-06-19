@@ -13,6 +13,7 @@ export function Login() {
     const [otpSent, setOtpSent] = useState(false)
     const [loading, setLoading] = useState(false)
 
+    console.log("otp length " , otp.length)
     const sendEmail = async () => {
         try {
             setLoading(true)
@@ -43,10 +44,24 @@ export function Login() {
     }
 
     const verifyOtp = async () => {
-        console.log({
-            email,
-            otp,
-        })
+   const response = await fetch(
+                `${process.env.NEXT_PUBLIC_USER_SERVICE_URL}/auth/validate/email`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email,
+                        otp
+                    }),
+                }
+            )
+
+            if (!response.ok) {
+                throw new Error('Failed to send OTP')
+            }
+
 
     }
 
@@ -66,7 +81,8 @@ export function Login() {
                 ) : (
                     <div className="flex justify-center">
                         <Field className="w-fit my-2">
-                            <InputOTP id="digits-only" maxLength={6} pattern={REGEXP_ONLY_DIGITS}>
+                            <InputOTP id="digits-only" maxLength={6} pattern={REGEXP_ONLY_DIGITS} value={otp}
+                            onChange={(value) => setOtp(value)}>
                                 <InputOTPGroup>
                                     <InputOTPSlot index={0} className="h-16 w-14 md:h-12 md:w-10 text-2xl" />
                                     <InputOTPSlot index={1} className="h-16 w-14 md:h-12 md:w-10 text-2xl" />
