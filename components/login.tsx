@@ -6,20 +6,23 @@ import { Input } from './ui/input'
 import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from './ui/input-otp'
 import { REGEXP_ONLY_DIGITS } from 'input-otp'
 import { Field } from './ui/field'
+import { Loader2 } from 'lucide-react'
+import { delay } from '@/lib/utils'
+import { useRouter } from 'next/navigation'
 
 export function Login() {
+    const router = useRouter();
     const [email, setEmail] = useState('')
     const [otp, setOtp] = useState('')
     const [otpSent, setOtpSent] = useState(false)
     const [loading, setLoading] = useState(false)
 
-    console.log("otp length " , otp.length)
     const sendEmail = async () => {
         try {
             setLoading(true)
 
             const response = await fetch(
-                `${process.env.NEXT_PUBLIC_USER_SERVICE_URL}/auth/login/email`,
+                `${process.env.NEXT_PUBLIC_USER_SERVICE_URL}/user/auth/login/email`,
                 {
                     method: 'POST',
                     headers: {
@@ -43,17 +46,22 @@ export function Login() {
         }
     }
 
-    const verifyOtp = async () => {
-   const response = await fetch(
-                `${process.env.NEXT_PUBLIC_USER_SERVICE_URL}/auth/validate/email`,
+    const verifyOtp = async (value: string) => {
+        try {
+            setLoading(true)
+
+            await delay(300)
+        const response = await fetch(
+                `${process.env.NEXT_PUBLIC_USER_SERVICE_URL}/user/auth/validate/email`,
                 {
                     method: 'POST',
+                    credentials: "include",
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
                         email,
-                        otp
+                        otp: value
                     }),
                 }
             )
@@ -62,8 +70,22 @@ export function Login() {
                 throw new Error('Failed to send OTP')
             }
 
+            const data = await response.json();
+            console.log(data.user);
+            if(data.user) {
+                localStorage.setItem("user", JSON.stringify(data.user));
+                router.push('/workspace')
+
+            }
+        } catch (error) {
+            console.error(error)
+        } finally {
+             setLoading(false);
+        }
+
 
     }
+
 
     return (
         <main className="flex items-center w-full h-dvh justify-center px-6">
@@ -82,7 +104,13 @@ export function Login() {
                     <div className="flex justify-center">
                         <Field className="w-fit my-2">
                             <InputOTP id="digits-only" maxLength={6} pattern={REGEXP_ONLY_DIGITS} value={otp}
-                            onChange={(value) => setOtp(value)}>
+                            onChange={(otp) => {
+                                setOtp(otp)
+
+                                if(otp.length == 6) {
+                                    verifyOtp(otp)
+                                }
+                            }}> 
                                 <InputOTPGroup>
                                     <InputOTPSlot index={0} className="h-16 w-14 md:h-12 md:w-10 text-2xl" />
                                     <InputOTPSlot index={1} className="h-16 w-14 md:h-12 md:w-10 text-2xl" />
@@ -113,10 +141,10 @@ export function Login() {
                         <Button
                             className="py-6 md:py-5 text-gray-300 text-md md:text-sm rounded-full"
                             variant="secondary"
-                            onClick={verifyOtp}
+                            onClick={() => verifyOtp(otp)}
                             disabled={otp.length !== 6}
                         >
-                            Verify OTP
+                            Verify OTP {loading && <Loader2 className='animate-spin' />}
                         </Button>
                     )}
 
