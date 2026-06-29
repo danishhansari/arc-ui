@@ -5,7 +5,6 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { motion } from 'framer-motion'
 import { Label } from '@/components/ui/label'
 
 interface OnboardingStep {
@@ -157,12 +156,8 @@ export default function OnboardingCarousel() {
 
             </div>
 
-            <motion.div
+            <div
                 key={`image-${currentStep}`}
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -50 }}
-                transition={{ duration: 0.5 }}
                 className="hidden w-1/2 flex-col items-center justify-center bg-zinc-900/75 p-12 lg:flex"
             >
                 <div className="aspect-square w-full max-w-md overflow-hidden rounded-2xl">
@@ -175,7 +170,7 @@ export default function OnboardingCarousel() {
                         Step {currentStep + 1} of {steps.length}
                     </p>
                 </div>
-            </motion.div>
+            </div>
 
         </div>
     )
