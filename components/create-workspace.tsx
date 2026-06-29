@@ -1,31 +1,87 @@
 'use client'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 import { Loader2 } from "lucide-react"
-import { createWorkspaceAction } from "@/app/actions"
+import { createWorkspaceAction, existsWorkspaceUrl } from "@/app/actions"
 import Link from "next/link"
+import { cn } from "@/lib/utils"
+import { useRouter } from "next/navigation"
 
 export const CreateWorkspace = () => {
     const [loading, setLoading] = useState(false)
     const [name, setName] = useState('')
     const [url, setUrl] = useState('')
+    const [debouncedUrl, setDebouncedUrl] = useState("")
+    const [urlExists, setUrlExists] = useState<boolean | null>(null);
+    const [showValid, setShowValid] = useState(false);
+    const navigation = useRouter();
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedUrl(url)
+        }, 500)
+        return () => clearTimeout(timer);
+    }, [url])
+
+    useEffect(() => {
+        if (!debouncedUrl.trim()) {
+            setUrlExists(null);
+            setShowValid(false);
+            return;
+        }
+
+        checkWorkspaceUrl(debouncedUrl);
+    }, [debouncedUrl]);
+
+    useEffect(() => {
+        if (!showValid) return;
+
+        const timer = setTimeout(() => {
+            setShowValid(false);
+        }, 2500);
+
+        return () => clearTimeout(timer);
+    }, [showValid]);
+
     const userInfo: any = localStorage.getItem("user")
-    const {email} = JSON.parse(userInfo);
+    const { email } = JSON.parse(userInfo);
+
+
+
     const createWorkspace = async () => {
         try {
             setLoading(true);
-            await createWorkspaceAction({
+            const response = await createWorkspaceAction({
                 name,
-                url,
+                url: `arc.app/${url}`,
             });
+            localStorage.setItem("organization", JSON.stringify(response));
+            navigation.push(`${response.name}`)
         } catch (e) {
             console.error(e);
         } finally {
             setLoading(false);
         }
     };
+
+    const checkWorkspaceUrl = async (debouncedUrl: string) => {
+        try {
+            const response = await existsWorkspaceUrl({
+                url: `arc.app/${debouncedUrl}`,
+            });
+            setUrlExists(response.exists);
+            if (response.exists) {
+                setShowValid(false);
+            } else {
+                setShowValid(true);
+            }
+        } catch (e) {
+            console.error(e);
+        } finally {
+        }
+    }
 
     return (
         <>
@@ -42,21 +98,62 @@ export const CreateWorkspace = () => {
 
                         <Label className="text-zinc-600 font-normal text-xs mt-6 mb-2">URL</Label>
 
-                        <div className="flex items-center rounded-md border focus-within:ring-1 focus-within:ring-ring">
-                            <span className="px-2 py-2.5 rounded-l-sm text-sm text-muted-foreground border-r bg-muted/40 border/30">
+                        <div
+                            className={cn(
+                                "flex items-center rounded-md border transition-colors",
+                                "focus-within:ring-1",
+                                urlExists === null && "border-input focus-within:ring-ring",
+                                urlExists === true &&
+                                "border-red-500 focus-within:border-red-500 focus-within:ring-red-500 animate-shake",
+                                showValid &&
+                                "border-green-500 focus-within:border-green-500 focus-within:ring-green-500"
+                            )}
+                        >
+                            <span className="px-2 py-2.5 rounded-l-sm text-sm text-muted-foreground border-r bg-muted/40">
                                 arc.app/
                             </span>
 
                             <Input
                                 value={url}
-                                onChange={(e) => setUrl(e.target.value)}
+                                onChange={(e) => {
+                                    setUrl(e.target.value);
+                                    setShowValid(false);
+                                    setUrlExists(null);
+                                }}
                                 className="border-0 py-5 shadow-none focus-visible:ring-0 rounded-l-none"
                             />
                         </div>
 
+                        <div>
+                            {loading && (
+                                <p className="text-xs text-muted-foreground mt-0.5">
+                                    Checking workspace URL...
+                                </p>
+                            )}
+
+                            {!loading && urlExists === true && (
+                                <p className="text-xs text-red-500 mt-0.5">
+                                    This workspace URL is already taken.
+                                </p>
+                            )}
+
+                            {!loading && showValid && (
+                                <p className="text-xs text-green-600 mt-0.5">
+                                    This workspace URL is available.
+                                </p>
+                            )}
+
+
+                        </div>
+
                         <Button className="w-full mt-12 py-6 rounded-full font-normal bg-zinc-900 hover:bg-zinc-850" variant={'secondary'}
                             onClick={createWorkspace}
-                            disabled={loading || !name || !url}
+                            disabled={
+                                loading ||
+                                !name.trim() ||
+                                !url.trim() ||
+                                urlExists !== false
+                            }
                         >Create workspace {loading && <Loader2 className="animate-spin" />}</Button>
                         <p className="text-zinc-600 font-normal text-sm text-center mt-8">Join existing workspace instead</p>
                     </div>
