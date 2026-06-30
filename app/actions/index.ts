@@ -1,5 +1,6 @@
 "use server";
 
+import { OnboardingData } from "@/types";
 import { cookies } from "next/headers";
 
 export async function createWorkspaceAction(data: {
@@ -30,8 +31,8 @@ export async function createWorkspaceAction(data: {
     const message = await response.json();
     throw new Error(message || "Failed to create workspace");
   }
-  const serverResponse  = await response.json();
-  return serverResponse; 
+  const serverResponse = await response.json();
+  return serverResponse;
 }
 
 
@@ -62,7 +63,37 @@ export async function existsWorkspaceUrl(data: {
     console.log(message)
     throw new Error("Failed to get response is exists or not");
   }
-  const serverResponse  = await response.json();
+  const serverResponse = await response.json();
   console.log(serverResponse)
-  return serverResponse; 
+  return serverResponse;
+}
+
+export async function createWorkspaceMemberAction(data: OnboardingData) {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+
+  console.log("thsi is data ", data)
+  if (!token) {
+    throw new Error("Unauthorized");
+  }
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_USER_SERVICE_URL}/issue/workspace/member`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+      cache: "no-store",
+    }
+  );
+
+  if (!response.ok) {
+    const message = await response.json();
+    throw new Error(message || "Failed to create workspace");
+  }
+  const serverResponse = await response.json();
+  return serverResponse;
 }

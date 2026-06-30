@@ -3,6 +3,7 @@ import { Button } from "../ui/button"
 import { CarouselApi } from "../ui/carousel"
 import { Label } from "../ui/label"
 import { EmailChipsInput } from "../emailbadge"
+import { createWorkspaceMemberAction } from "@/app/actions";
 
 
 interface ProfileProps {
@@ -12,6 +13,23 @@ interface ProfileProps {
 }
 
 export const InviteTeam = ({ api, data, updateData }: ProfileProps) => {
+    
+    const createWorkspace = async () => {
+        let workspaceId;
+        const organization = localStorage.getItem("organization");
+        if(organization != null) {
+            workspaceId = JSON.parse(organization);
+        }
+        try {
+            data.workspaceId = workspaceId.id;
+            const response = await createWorkspaceMemberAction(data);
+            console.log(response)
+        } catch (e) {
+            console.error(e);
+        } finally {
+        }
+    };
+
     return (
         <>
             <div className="max-w-sm w-full mx-auto px-2">
@@ -29,7 +47,7 @@ export const InviteTeam = ({ api, data, updateData }: ProfileProps) => {
                     <Label className="text-sm text-zinc-500 font-normal">
                         Invitations
                     </Label>
-                    <EmailChipsInput value={data.emails} onChange={(emails) => updateData({ emails })} />
+                    <EmailChipsInput value={data.invitedEmail} onChange={(invitedEmail) => updateData({ invitedEmail })} />
                 </div>
 
             </div>
@@ -45,7 +63,7 @@ export const InviteTeam = ({ api, data, updateData }: ProfileProps) => {
                 </Button>
 
                 <Button
-                    onClick={() => api?.scrollNext()}
+                    onClick={createWorkspace}
                     variant="secondary"
                     className="h-11 rounded-full px-4 text-xs"
                 >

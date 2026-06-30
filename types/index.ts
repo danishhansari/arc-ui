@@ -1,7 +1,8 @@
 export interface OnboardingData {
     name: string;
     title: string;
-    emails: string[];
+    invitedEmail: string[];
+    workspaceId?:string;
 }
 
 export interface EmailChipsInputProps {

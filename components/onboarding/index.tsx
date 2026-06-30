@@ -15,7 +15,7 @@ export default function OnboardingCarousel() {
     const [data, setData] = useState<OnboardingData>({
         name: "",
         title: "",
-        emails: [],
+        invitedEmail: [],
     });
 
     const updateData = (patch: Partial<OnboardingData>) => {
