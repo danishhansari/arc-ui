@@ -23,8 +23,6 @@ export default function OnboardingCarousel() {
     };
     const [api, setApi] = useState<CarouselApi | null>(null);
 
-    console.log(data)
-
     return (
         <>
             <div className="flex h-dvh w-full overflow-hidden">

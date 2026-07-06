@@ -72,7 +72,6 @@ export async function createWorkspaceMemberAction(data: OnboardingData) {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
 
-  console.log("thsi is data ", data)
   if (!token) {
     throw new Error("Unauthorized");
   }
@@ -90,6 +89,33 @@ export async function createWorkspaceMemberAction(data: OnboardingData) {
     }
   );
 
+  if (!response.ok) {
+    const message = await response.json();
+    throw new Error(message || "Failed to create workspace");
+  }
+  const serverResponse = await response.json();
+  return serverResponse;
+}
+
+export async function getWorkspaceSummary (){
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+
+  if (!token) {
+    throw new Error("Unauthorized");
+  }
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_USER_SERVICE_URL}/issue/workspace`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  );
   if (!response.ok) {
     const message = await response.json();
     throw new Error(message || "Failed to create workspace");

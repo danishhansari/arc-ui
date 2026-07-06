@@ -12,5 +12,11 @@ export interface EmailChipsInputProps {
   className?: string;
 }
 
+export interface WorkspaceSummary {
+    workspaceId: string;
+    workspaceName: string;
+    workspaceMembers: number;
+};
+
 export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 

@@ -71,7 +71,6 @@ export function Login() {
             }
 
             const data = await response.json();
-            console.log(data.user);
             if(data.user) {
                 localStorage.setItem("user", JSON.stringify(data.user));
                 router.push('/workspace')
@@ -82,8 +81,6 @@ export function Login() {
         } finally {
              setLoading(false);
         }
-
-
     }
 
 

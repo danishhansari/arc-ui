@@ -58,7 +58,7 @@ export const CreateWorkspace = () => {
                 url: `arc.app/${url}`,
             });
             localStorage.setItem("organization", JSON.stringify(response));
-            navigation.push(`${response.name}`)
+            navigation.replace(`/${response.name}/welcome`)
         } catch (e) {
             console.error(e);
         } finally {
@@ -88,7 +88,7 @@ export const CreateWorkspace = () => {
             <main className="flex justify-center h-dvh">
                 <div className="max-w-md w-full px-4 flex flex-col justify-between">
                     <div>
-                        <h2 className="text-xl mt-18 text-center">Create a workspace</h2>
+                        <h2 className="text-xl mt-18 md:mt-28 text-center">Create a workspace</h2>
                         <h3 className="text-zinc-500 mt-2  mb-8 text-sm text-center">Move work forward accross teams and agents</h3>
                         <Label className="text-zinc-600 font-normal text-xs mb-2">Name</Label>
                         <Input className="border border-zinc-800 py-5"
