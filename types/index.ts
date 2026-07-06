@@ -12,7 +12,7 @@ export interface EmailChipsInputProps {
   className?: string;
 }
 
-export interface WorkspaceSummary {
+export interface WorkspaceSummaryType {
     workspaceId: string;
     workspaceName: string;
     workspaceMembers: number;
