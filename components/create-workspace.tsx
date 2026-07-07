@@ -17,6 +17,7 @@ export const CreateWorkspace = () => {
     const [urlExists, setUrlExists] = useState<boolean | null>(null);
     const [showValid, setShowValid] = useState(false);
     const navigation = useRouter();
+    const [email, setEmail] = useState('');
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -24,6 +25,14 @@ export const CreateWorkspace = () => {
         }, 500)
         return () => clearTimeout(timer);
     }, [url])
+
+    useEffect(() => {
+            const userInfo: any = localStorage.getItem("user")
+            if(userInfo) {
+            const {email} = JSON.parse(userInfo);
+            setEmail(email);
+            }
+    })
 
     useEffect(() => {
         if (!debouncedUrl.trim()) {
@@ -45,8 +54,7 @@ export const CreateWorkspace = () => {
         return () => clearTimeout(timer);
     }, [showValid]);
 
-    const userInfo: any = localStorage.getItem("user")
-    const { email } = JSON.parse(userInfo);
+
 
     const createWorkspace = async () => {
         try {
