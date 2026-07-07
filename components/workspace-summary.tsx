@@ -3,27 +3,21 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Loader2, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { WorkspaceSummaryType } from "@/types";
 import { getWorkspaceSummary } from "@/app/actions";
 import { Skeleton } from "./ui/skeleton";
+import { Logout } from "./logout";
 
 
 export const WorkspaceSummary = () => {
 
     const [workspaces, setWorkspaces] = useState<WorkspaceSummaryType[]>([]);
     const [loading, setLoading] = useState(true);
-    const [email, setEmail] = useState('');
 
     useEffect(() => {
-        const user = localStorage.getItem("user");
-
-        if (user) {
-            setEmail(JSON.parse(user).email);
-        }
-
-        fetchWorkspaces();
+          fetchWorkspaces();
     }, []);
 
     const fetchWorkspaces = async () => {
@@ -47,20 +41,7 @@ export const WorkspaceSummary = () => {
 
     return (
         <section className="flex h-full flex-col">
-            <div className="flex items-center justify-between px-6 py-4">
-                <Button variant="link" className="text-xs font-normal text-neutral-400">
-                    Log out
-                </Button>
-
-                <div className="mt-2 flex flex-col gap-0.5">
-                    <p className="text-xs font-normal text-neutral-400">
-                        Logged in as
-                    </p>
-                    <p className="text-xs font-normal">
-                        {email}
-                    </p>
-                </div>
-            </div>
+           <Logout />
 
             <div className="flex h-[80vh] items-center justify-center">
                 <div>

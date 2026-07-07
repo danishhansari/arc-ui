@@ -48,8 +48,6 @@ export const CreateWorkspace = () => {
     const userInfo: any = localStorage.getItem("user")
     const { email } = JSON.parse(userInfo);
 
-
-
     const createWorkspace = async () => {
         try {
             setLoading(true);

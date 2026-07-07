@@ -35,7 +35,6 @@ export async function createWorkspaceAction(data: {
   return serverResponse;
 }
 
-
 export async function existsWorkspaceUrl(data: {
   url: string;
 }) {
@@ -97,7 +96,7 @@ export async function createWorkspaceMemberAction(data: OnboardingData) {
   return serverResponse;
 }
 
-export async function getWorkspaceSummary (){
+export async function getWorkspaceSummary() {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
 
@@ -122,4 +121,32 @@ export async function getWorkspaceSummary (){
   }
   const serverResponse = await response.json();
   return serverResponse;
+}
+
+export async function logoutAction() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+
+  if (!token) {
+    throw new Error("Unauthorized");
+  }
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_USER_SERVICE_URL}/user/auth/logout`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  if (!response.ok) {
+    const message = await response.json();
+    throw new Error(message || "Failed to logout");
+  }
+  cookieStore.delete("token");
+  return;
 }
