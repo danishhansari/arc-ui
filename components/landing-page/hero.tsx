@@ -19,25 +19,19 @@ export function Hero() {
             <ArrowRight className="h-3 w-3" />
           </a>
 
-          <h1
-            className="animate-fade-up text-balance font-semibold leading-[1.08] tracking-[-0.03em] text-gradient opacity-0 [animation-delay:80ms] text-4xl sm:text-md md:text-7xl"
-          >
-            Issue tracking built for
+          <h1 className="animate-fade-up text-balance font-semibold leading-[1.08] tracking-[-0.03em] text-gradient opacity-0 [animation-delay:80ms] text-4xl sm:text-md md:text-7xl">
+            Build products
             <br />
-            teams that ship fast
+            Ship faster.
           </h1>
 
-          <p
-            className="mt-5 max-w-2xl animate-fade-up text-balance text-md leading-relaxed text-muted-foreground opacity-0 [animation-delay:160ms] sm:text-md"
-          >
-            Arc is the fast, keyboard-first issue tracker for modern
-            engineering teams. Plan cycles, track progress, and ship without
-            the overhead of project management.
+          <p className="mt-5 max-w-2xl animate-fade-up text-balance text-md leading-relaxed text-muted-foreground opacity-0 [animation-delay:160ms] sm:text-md">
+            Everything from planning to production,
+            <br />
+            designed to keep engineering teams moving.
           </p>
 
-          <div
-            className="mt-8 flex animate-fade-up flex-col items-center gap-3 opacity-0 [animation-delay:240ms] sm:flex-row"
-          >
+          <div className="mt-8 flex animate-fade-up flex-col items-center gap-3 opacity-0 [animation-delay:240ms] sm:flex-row">
             <Button variant="default" size="lg" className="gap-1.5">
               Start building <ArrowRight className="h-4 w-4" />
             </Button>

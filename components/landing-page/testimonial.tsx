@@ -16,7 +16,9 @@ export function Testimonial() {
           <div>
             <p className="font-medium">Saad Anzari</p>
 
-            <p className="text-white/45">AI Engineer · Auro Labs</p>
+            <p className="text-white/45">
+              AI Engineer <span className="font-mono"> ·Auro Labs</span>
+            </p>
           </div>
         </div>
       </div>
