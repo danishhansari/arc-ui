@@ -6,7 +6,7 @@ type AnimatedNumberProps = {
   start: number;
   end: number;
   duration?: number;
-  formatter: "ms" | "%" | "k";
+  formatter: string;
 };
 
 export function AnimatedNumber({
