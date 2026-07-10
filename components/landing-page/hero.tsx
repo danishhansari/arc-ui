@@ -20,7 +20,7 @@ export function Hero() {
           </a>
 
           <h1
-            className="animate-fade-up text-balance font-semibold leading-[1.08] tracking-[-0.03em] text-gradient opacity-0 [animation-delay:80ms] text-4xl sm:text-md md:text-lg"
+            className="animate-fade-up text-balance font-semibold leading-[1.08] tracking-[-0.03em] text-gradient opacity-0 [animation-delay:80ms] text-4xl sm:text-md md:text-7xl"
           >
             Issue tracking built for
             <br />
@@ -28,7 +28,7 @@ export function Hero() {
           </h1>
 
           <p
-            className="mt-5 max-w-xl animate-fade-up text-balance text-md leading-relaxed text-muted-foreground opacity-0 [animation-delay:160ms] sm:text-md"
+            className="mt-5 max-w-2xl animate-fade-up text-balance text-md leading-relaxed text-muted-foreground opacity-0 [animation-delay:160ms] sm:text-md"
           >
             Arc is the fast, keyboard-first issue tracker for modern
             engineering teams. Plan cycles, track progress, and ship without
@@ -51,7 +51,7 @@ export function Hero() {
           </p>
         </div>
 
-        <div className="relative mx-auto mt-16 max-w-3xl animate-fade-up opacity-0 [animation-delay:380ms]">
+        <div className="relative mx-auto mt-16 max-w-4xl animate-fade-up opacity-0 [animation-delay:380ms]">
           <IssuePreview />
         </div>
       </div>

@@ -1,34 +1,5 @@
-// export function Testimonial() {
-//   return (
-//     <section className="border-b border-white/6 py-24">
-//       <div className="container">
-//         <div className="mx-auto max-w-2xl text-center">
-//           <p className="text-balance text-[22px] font-medium leading-snug tracking-[-0.01em] text-foreground/90 sm:text-[26px]">
-//             “We moved off three tools and a spreadsheet. Our team ships on a
-//             tighter cycle because nobody is asking where an issue stands
-//             anymore — they just look.”
-//           </p>
-//           <div className="mt-6 flex items-center justify-center gap-3">
-//             <span className="flex h-9 w-9 items-center justify-center rounded-full bg-accent text-[12px] font-semibold text-white">
-//               PL
-//             </span>
-//             <div className="text-left">
-//               <div className="text-[13px] font-medium">Priya Lang</div>
-//               <div className="text-[12px] text-foreground-subtle">
-//                 Head of Engineering, Northwind
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </section>
-//   );
-// }
-
-
 "use client";
 
-import * as React from "react";
 import Autoplay from "embla-carousel-autoplay";
 
 import {

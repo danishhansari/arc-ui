@@ -28,7 +28,6 @@ const issues: Issue[] = [
 export function IssuePreview() {
   return (
     <div className="w-full overflow-hidden rounded-lg border border-white/10 bg-surface shadow-[0_20px_70px_-15px_rgba(0,0,0,0.7)]">
-      {/* window chrome */}
       <div className="flex items-center gap-1.5 border-b border-white/6 bg-surface-2 px-3.5 py-2.5">
         <span className="h-2.5 w-2.5 rounded-full bg-white/10" />
         <span className="h-2.5 w-2.5 rounded-full bg-white/10" />
