@@ -4,7 +4,7 @@ import { IssuePreview } from "./issue-previewer";
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden pt-20 pb-24 sm:pt-38">
+    <section className="relative overflow-hidden pt-32 pb-24 sm:pt-48">
       <div className="pointer-events-none absolute inset-0 bg-grid mask-[radial-gradient(ellipse_60%_50%_at_50%_0%,#000_20%,transparent_80%)]" />
       <div className="pointer-events-none absolute left-1/2 -top-45 h-130 w-225 -translate-x-1/2 rounded-full bg-accent/20 blur-[140px]" />
 
@@ -20,7 +20,7 @@ export function Hero() {
           </a>
 
           <h1
-            className="animate-fade-up text-balance text-[40px] font-semibold leading-[1.08] tracking-[-0.03em] text-gradient opacity-0 [animation-delay:80ms] sm:text-[56px] md:text-[64px]"
+            className="animate-fade-up text-balance font-semibold leading-[1.08] tracking-[-0.03em] text-gradient opacity-0 [animation-delay:80ms] text-4xl sm:text-md md:text-lg"
           >
             Issue tracking built for
             <br />
@@ -28,7 +28,7 @@ export function Hero() {
           </h1>
 
           <p
-            className="mt-5 max-w-xl animate-fade-up text-balance text-[16px] leading-relaxed text-foreground-muted opacity-0 [animation-delay:160ms] sm:text-[18px]"
+            className="mt-5 max-w-xl animate-fade-up text-balance text-md leading-relaxed text-muted-foreground opacity-0 [animation-delay:160ms] sm:text-md"
           >
             Arc is the fast, keyboard-first issue tracker for modern
             engineering teams. Plan cycles, track progress, and ship without
