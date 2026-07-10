@@ -1,25 +1,46 @@
-import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export function CTA() {
   return (
-    <section className="relative overflow-hidden py-28">
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-100 w-175 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/15 blur-[130px]" />
-      <div className="container relative text-center">
-        <h2 className="text-balance text-[32px] font-semibold tracking-[-0.02em] sm:text-[42px]">
-          Set up your team in minutes
-        </h2>
-        <p className="mx-auto mt-4 max-w-md text-[15px] text-foreground-muted">
-          Import from your current tracker, invite your team, and start your
-          first cycle today.
-        </p>
-        <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <Button variant="secondary" size="lg" className="gap-1.5">
-            Start building <ArrowRight className="h-4 w-4" />
-          </Button>
-          <Button variant="outline" size="lg">
-            Talk to sales
-          </Button>
+    <section className="border-t border-white/6 py-40">
+      <div className="container">
+        <div className="mx-auto flex max-w-5xl flex-col items-center text-center">
+          <p className="text-xs uppercase tracking-[0.35em] text-white/35">
+            Ready when you are
+          </p>
+
+          <h2 className="mt-8 text-balance text-5xl font-semibold leading-[1.05] tracking-tight md:text-7xl">
+            Build products.
+            <br />
+            Not busywork.
+          </h2>
+
+          <p className="mt-8 max-w-2xl text-lg leading-8 text-white/50">
+            Arc brings planning, issues, pull requests and releases together
+            into one calm workspace—so your team can stay focused on shipping.
+          </p>
+
+          <div className="mt-14 flex flex-wrap items-center justify-center gap-4">
+            <Button size="lg" className="h-12 rounded-xl px-7">
+              Start your first cycle
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+
+            <Button
+              variant="ghost"
+              size="lg"
+              className="h-12 rounded-xl text-white/60 hover:bg-transparent hover:text-white"
+            >
+              Book a demo
+            </Button>
+          </div>
+
+          <div className="mt-14 flex flex-wrap items-center justify-center gap-8 text-sm text-white/35">
+            <span>No credit card</span>
+            <span>Free migration</span>
+            <span>Cancel anytime</span>
+          </div>
         </div>
       </div>
     </section>

@@ -12,7 +12,7 @@ type AnimatedNumberProps = {
 export function AnimatedNumber({
   start,
   end,
-  duration = 8500,
+  duration = 6500,
   formatter,
 }: AnimatedNumberProps) {
   const ref = useRef<HTMLSpanElement>(null);

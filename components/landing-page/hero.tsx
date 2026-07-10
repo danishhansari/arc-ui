@@ -46,7 +46,7 @@ export function Hero() {
             </Button>
           </div>
 
-          <p className="mt-4 animate-fade-up text-[12px] text-foreground-subtle opacity-0 [animation-delay:300ms]">
+          <p className="mt-4 animate-fade-up text-[12px] text-muted opacity-0 [animation-delay:300ms]">
             No credit card required · Free for teams up to 10
           </p>
         </div>

@@ -1,63 +1,100 @@
+import Link from "next/link";
+
 const columns = [
   {
     title: "Product",
-    links: ["Features", "Integrations", "Changelog", "Pricing"],
+    links: ["Features", "Pricing", "Integrations", "Changelog"],
   },
   {
     title: "Resources",
-    links: ["Docs", "API", "Guides", "Status"],
+    links: ["Documentation", "API", "Guides", "Status"],
   },
   {
     title: "Company",
-    links: ["About", "Careers", "Blog", "Contact"],
+    links: ["About", "Blog", "Careers", "Contact"],
   },
 ];
 
 export function Footer() {
   return (
-    <footer className="py-16">
-      <div className="container">
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-5">
-          <div className="col-span-2">
-            <div className="flex items-center gap-2">
-              <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-                <rect width="20" height="20" rx="5" className="fill-white" />
-                <path d="M10 4L10 16M4 10L16 10" stroke="#09090B" strokeWidth="1.6" strokeLinecap="round" />
-              </svg>
-              <span className="text-[14px] font-semibold">Arc</span>
-            </div>
-            <p className="mt-3 max-w-60 text-[13px] leading-relaxed text-foreground-subtle">
-              The issue tracker for teams that would rather be building.
+    <footer className="relative overflow-hidden border-t border-white/6 py-28">
+      {/* Huge background word */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center overflow-hidden">
+        <span className="translate-y-1/3 select-none text-[180px] font-semibold tracking-[-0.08em] text-white/2 md:text-[280px]">
+          ARC
+        </span>
+      </div>
+
+      <div className="container relative">
+        {/* Top */}
+        <div className="grid gap-20 lg:grid-cols-[1.3fr_2fr]">
+          {/* Left */}
+          <div>
+            <h2 className="text-3xl font-semibold tracking-tight">Arc</h2>
+
+            <p className="mt-6 max-w-sm text-base leading-7 text-white/50">
+              One workspace for planning, tracking and shipping software. Built
+              for engineering teams that value speed, focus and thoughtful
+              workflows.
+            </p>
+
+            <p className="mt-10 text-sm text-white/35">
+              Built for modern engineering teams.
             </p>
           </div>
-          {columns.map((col) => (
-            <div key={col.title}>
-              <h4 className="text-[12px] font-medium uppercase tracking-[0.08em] text-foreground-subtle">
-                {col.title}
-              </h4>
-              <ul className="mt-3 space-y-2">
-                {col.links.map((link) => (
-                  <li key={link}>
-                    <a
+
+          {/* Right */}
+          <div className="grid grid-cols-2 gap-12 sm:grid-cols-3">
+            {columns.map((column) => (
+              <div key={column.title}>
+                <h3 className="text-xs font-medium uppercase tracking-[0.28em] text-white/35">
+                  {column.title}
+                </h3>
+
+                <div className="mt-6 space-y-3">
+                  {column.links.map((link) => (
+                    <Link
+                      key={link}
                       href="#"
-                      className="text-[13px] text-foreground-muted transition-colors hover:text-foreground"
+                      className="block text-sm text-white/50 transition-colors duration-300 hover:text-white"
                     >
                       {link}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/6 pt-6 sm:flex-row">
-          <p className="text-[12px] text-foreground-subtle">
-            © {new Date().getFullYear()} Arc, Inc. All rights reserved.
-          </p>
-          <div className="flex gap-5 text-[12px] text-foreground-subtle">
-            <a href="#" className="hover:text-foreground-muted">Privacy</a>
-            <a href="#" className="hover:text-foreground-muted">Terms</a>
-            <a href="#" className="hover:text-foreground-muted">Security</a>
+
+        {/* Divider */}
+        <div className="my-14 h-px bg-white/6" />
+
+        {/* Bottom */}
+        <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-center gap-3 text-sm text-white/35">
+            <div className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+            </div>
+
+            <span>All systems operational</span>
+          </div>
+
+          <div className="text-sm text-white/35">
+            © {new Date().getFullYear()} Arc. Crafted with care for builders.
+          </div>
+
+          <div className="flex gap-8 text-sm">
+            {["Privacy", "Terms", "Security", "GitHub"].map((item) => (
+              <Link
+                key={item}
+                href="#"
+                className="text-white/35 transition-colors hover:text-white"
+              >
+                {item}
+              </Link>
+            ))}
           </div>
         </div>
       </div>

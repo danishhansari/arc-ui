@@ -1,40 +1,124 @@
+"use client";
+import { ArrowRight, CalendarDays, Rocket, Users } from "lucide-react";
+
 const stages = [
   {
-    n: "01",
-    title: "Plan the cycle",
-    copy: "Scope work into weekly or bi-weekly cycles. Estimate with points or time, and let Arc track velocity automatically.",
+    icon: CalendarDays,
+    title: "Plan",
+    description:
+      "Prioritize work into focused cycles that keep everyone aligned.",
   },
   {
-    n: "02",
-    title: "Build in the open",
-    copy: "Every issue is visible to the team. Sub-issues, dependencies, and blockers surface before they cost you a day.",
+    icon: Users,
+    title: "Collaborate",
+    description:
+      "Discuss, assign and review progress without leaving your workspace.",
   },
   {
-    n: "03",
-    title: "Ship and close the loop",
-    copy: "Merge the PR and the issue closes itself. Release notes compile from completed work, no extra step.",
+    icon: Rocket,
+    title: "Ship",
+    description:
+      "Pull requests, deployments and releases update automatically.",
   },
 ];
 
 export function WorkflowSection() {
   return (
-    <section id="workflows" className="border-b border-white/6 py-24">
-      <div className="container">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
-          {stages.map((s, i) => (
-            <div key={s.n} className="relative">
-              <div className="font-mono text-[13px] text-accent-light">{s.n}</div>
-              <h3 className="mt-3 text-[18px] font-semibold">{s.title}</h3>
-              <p className="mt-2 text-[14px] leading-relaxed text-foreground-muted">
-                {s.copy}
+    <div className="container grid gap-8 lg:grid-cols-3">
+      {stages.map((stage) => {
+        const Icon = stage.icon;
+
+        return (
+            <PixelCard>
+          <div className="group relative overflow-hidden rounded-3xl border border-white/8 bg-[#080808] p-8 transition-all duration-500 hover:-translate-y-1 hover:border-white/15">
+            {/* Glow */}
+            <div className="absolute inset-0 bg-gradient-to-b from-white/[0.03] to-transparent" />
+            <div className="absolute inset-0 overflow-hidden rounded-[inherit]"></div>
+              
+            <div className="relative">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03]">
+                <Icon className="h-5 w-5 text-accent-light" />
+              </div>
+
+              <h3 className="mt-8 text-2xl font-semibold">{stage.title}</h3>
+
+              <p className="mt-4 leading-7 text-white/55">
+                {stage.description}
               </p>
-              {i < stages.length - 1 && (
-                <div className="absolute -right-5 top-1 hidden h-px w-10 bg-white/10 md:block" />
-              )}
+
+              <div className="mt-8 flex items-center gap-2 text-sm text-accent-light">
+                Learn more
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </div>
             </div>
-          ))}
-        </div>
-      </div>
-    </section>
+          </div>
+            </PixelCard>
+        );
+      })}
+    </div>
+  );
+}
+
+import { PropsWithChildren, useRef, useState, MouseEvent } from "react";
+import { cn } from "@/lib/utils";
+
+export function PixelCard({
+  children,
+  className,
+}: PropsWithChildren<{ className?: string }>) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  const [mouse, setMouse] = useState({
+    x: 50,
+    y: 50,
+  });
+
+  function handleMove(e: MouseEvent<HTMLDivElement>) {
+    if (!ref.current) return;
+
+    const rect = ref.current.getBoundingClientRect();
+
+    setMouse({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  }
+
+  return (
+    <div
+      ref={ref}
+      onMouseMove={handleMove}
+      className={cn(
+        "group relative overflow-hidden rounded-3xl border border-white/10 bg-[#090909]",
+        className,
+      )}
+    >
+      {/* Glow */}
+      <div
+        className="pointer-events-none absolute inset-0 transition-opacity duration-300"
+        style={{
+          background: `radial-gradient(220px circle at ${mouse.x}px ${mouse.y}px, rgba(99,102,241,.16), transparent 70%)`,
+        }}
+      />
+
+      {/* Pixel grid */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-40"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(255,255,255,.07) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,.07) 1px, transparent 1px)
+          `,
+          backgroundSize: "16px 16px",
+          maskImage: `radial-gradient(220px circle at ${mouse.x}px ${mouse.y}px, black 20%, transparent 100%)`,
+          WebkitMaskImage: `radial-gradient(220px circle at ${mouse.x}px ${mouse.y}px, black 20%, transparent 100%)`,
+        }}
+      />
+
+      {/* Noise */}
+      <div className="absolute inset-0 opacity-[0.03] [background-image:radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] [background-size:18px_18px]" />
+
+      {children}
+    </div>
   );
 }

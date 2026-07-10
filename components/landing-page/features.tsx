@@ -17,7 +17,7 @@ function SectionHeading() {
         Workspace
       </Badge>
 
-      <h2 className="mt-6 text-balance text-4xl font-semibold md:text-6xl">
+      <h2 className="mt-6 text-balance text-4xl font-semibold md:text-5xl">
         One workspace
         <br />
         for planning,
@@ -47,7 +47,7 @@ export function Features() {
       <div className="container">
         <SectionHeading />
 
-        <div className="grid gap-6 lg:grid-cols-3">
+        <div className="grid gap-5 lg:grid-cols-3">
           {/* Command Palette */}
           <FeatureCard
             className="lg:col-span-2"
@@ -149,8 +149,8 @@ export function FeatureCard({
         </div>
 
         {/* Product Preview */}
-        <div className="mt-10 flex flex-1 items-end">
-          <div className="w-full rounded-2xl border border-white/6 bg-white/[0.02] p-5">
+        <div className="mt-6 flex flex-1 items-end">
+          <div className="w-full rounded-2xl border border-white/6 bg-white/[0.06]">
             {children}
           </div>
         </div>
