@@ -2,7 +2,7 @@ import { OnboardingData } from "@/types";
 import { Button } from "../ui/button"
 import { CarouselApi } from "../ui/carousel"
 import { Label } from "../ui/label"
-import { EmailChipsInput } from "../emailbadge"
+import { EmailChipsInput } from "../email-badge"
 import { createWorkspaceMemberAction } from "@/app/actions";
 
 

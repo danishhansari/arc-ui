@@ -20,3 +20,14 @@ export interface WorkspaceSummaryType {
 
 export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+export type Status = "backlog" | "todo" | "progress" | "done";
+export type Priority = "high" | "medium" | "low";
+
+export interface Issue {
+  id: string;
+  title: string;
+  status: Status;
+  priority: Priority;
+  assignee: string;
+  color: string;
+}
