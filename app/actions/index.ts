@@ -96,7 +96,35 @@ export async function createWorkspaceMemberAction(data: OnboardingData) {
   return serverResponse;
 }
 
-export async function getWorkspaceSummary() {
+
+export async function getActiveWorkspaceSummaryAction() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+
+  if (!token) {
+    throw new Error("Unauthorized");
+  }
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_USER_SERVICE_URL}/issue/workspace/active`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    }
+  );
+  if (!response.ok) {
+    const message = await response.json();
+    throw new Error(message || "Failed to create workspace");
+  }
+  const serverResponse = await response.json();
+  return serverResponse;
+}
+
+export async function getWorkspaceSummaryAction() {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
 
@@ -149,4 +177,33 @@ export async function logoutAction() {
   }
   cookieStore.delete("token");
   return;
+}
+
+export async function updateWorkspaceAction(workspaceId: string) {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+
+  if (!token) {
+    throw new Error("Unauthorized");
+  }
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_USER_SERVICE_URL}/issue/workspace`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({workspaceId, active: true}),
+      cache: "no-store",
+    }
+  );
+
+  if (!response.ok) {
+    const message = await response.json();
+    throw new Error(message || "Failed to update workspace");
+  }
+  const serverResponse = await response.json();
+  return serverResponse;
 }
