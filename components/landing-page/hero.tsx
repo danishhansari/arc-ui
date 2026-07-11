@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { IssuePreview } from "./issue-previewer";
+import Link from "next/link";
 
 export function Hero() {
   return (
@@ -32,9 +33,11 @@ export function Hero() {
           </p>
 
           <div className="mt-8 flex animate-fade-up flex-col items-center gap-3 opacity-0 [animation-delay:240ms] sm:flex-row">
+            <Link href={'/login'}>
             <Button variant="default" size="lg" className="gap-1.5">
               Start building <ArrowRight className="h-4 w-4" />
             </Button>
+            </Link>
             <Button variant="outline" size="lg">
               Watch demo
             </Button>

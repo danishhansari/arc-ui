@@ -29,7 +29,7 @@ export function WorkflowSection() {
         const Icon = stage.icon;
 
         return (
-            <PixelCard>
+            <PixelCard key={stage.title}>
           <div className="group relative overflow-hidden rounded-3xl border border-white/8 bg-[#080808] p-8 transition-all duration-500 hover:-translate-y-1 hover:border-white/15">
             {/* Glow */}
             <div className="absolute inset-0 bg-gradient-to-b from-white/[0.03] to-transparent" />
@@ -116,7 +116,7 @@ export function PixelCard({
       />
 
       {/* Noise */}
-      <div className="absolute inset-0 opacity-[0.03] [background-image:radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] [background-size:18px_18px]" />
+      <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] [background-size:18px_18px]" />
 
       {children}
     </div>

@@ -22,8 +22,7 @@ export const InviteTeam = ({ api, data, updateData }: ProfileProps) => {
         }
         try {
             data.workspaceId = workspaceId.id;
-            const response = await createWorkspaceMemberAction(data);
-            console.log(response)
+            await createWorkspaceMemberAction(data);
         } catch (e) {
             console.error(e);
         } finally {

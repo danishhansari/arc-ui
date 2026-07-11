@@ -1,11 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import {
-  Gauge,
-  GitBranch,
-  Inbox,
-  Workflow,
-} from "lucide-react";
-
+import { Gauge, GitBranch, Inbox, Workflow } from "lucide-react";
 
 function SectionHeading() {
   return (
@@ -17,17 +11,15 @@ function SectionHeading() {
         Workspace
       </Badge>
 
-      <h2 className="mt-6 text-balance text-4xl font-semibold md:text-5xl">
-        One workspace
+      <h2 className="mt-8 text-balance text-4xl font-semibold leading-[1.05] tracking-tight md:text-6xl">
+        Work without
         <br />
-        for planning,
-        <span className="text-white/85"> building and shipping.</span>
+        switching tools.
       </h2>
 
-      <p className="mx-auto mt-8 max-w-2xl text-lg leading-8 text-muted-foreground">
-        Arc brings projects, issues, roadmaps and code together in one fast,
-        keyboard-first workspace—so your team spends less time managing work
-        and more time shipping it.
+      <p className="mt-8 max-w-xl mx-auto text-md leading-8 text-white/50">
+        Keep projects, tasks, roadmaps, and development in one place so your
+        team can focus on building instead of managing.
       </p>
     </div>
   );
@@ -91,7 +83,6 @@ export function Features() {
   );
 }
 
-
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
@@ -116,7 +107,7 @@ export function FeatureCard({
         "group relative overflow-hidden rounded-3xl border border-white/8 bg-[#080808]",
         "transition-all duration-500",
         "hover:-translate-y-1 hover:border-white/15",
-        className
+        className,
       )}
     >
       {/* Background */}
@@ -159,12 +150,7 @@ export function FeatureCard({
   );
 }
 
-
-import {
-  ArrowRight,
-  Clock3,
-  Search,
-} from "lucide-react";
+import { ArrowRight, Clock3, Search } from "lucide-react";
 
 const commands = [
   {
@@ -208,25 +194,19 @@ export function ShortcutDemo() {
           <button
             key={command.title}
             className={`flex w-full items-center justify-between rounded-lg px-3 py-3 transition-all ${
-              command.active
-                ? "bg-white/[0.05]"
-                : "hover:bg-white/[0.03]"
+              command.active ? "bg-white/[0.05]" : "hover:bg-white/[0.03]"
             }`}
           >
             <div className="flex items-center gap-3">
               <div
                 className={`h-2 w-2 rounded-full ${
-                  command.active
-                    ? "bg-accent"
-                    : "bg-white/20"
+                  command.active ? "bg-accent" : "bg-white/20"
                 }`}
               />
 
               <span
                 className={`text-sm ${
-                  command.active
-                    ? "text-white"
-                    : "text-white/70"
+                  command.active ? "text-white" : "text-white/70"
                 }`}
               >
                 {command.title}
@@ -253,9 +233,7 @@ export function ShortcutDemo() {
               ENG-142 · Retry webhook delivery
             </p>
 
-            <p className="mt-1 text-xs text-white/40">
-              Updated 2 minutes ago
-            </p>
+            <p className="mt-1 text-xs text-white/40">Updated 2 minutes ago</p>
           </div>
 
           <ArrowRight className="h-4 w-4 text-white/25" />
@@ -264,7 +242,6 @@ export function ShortcutDemo() {
     </div>
   );
 }
-
 
 const sprintIssues = [
   {
@@ -294,9 +271,7 @@ export function CycleDemo() {
             Current Cycle
           </p>
 
-          <h4 className="mt-1 font-semibold text-white">
-            Cycle 24
-          </h4>
+          <h4 className="mt-1 font-semibold text-white">Cycle 24</h4>
         </div>
 
         <div className="rounded-full border border-accent/20 bg-accent/10 px-3 py-1 text-xs text-accent-light">
@@ -307,13 +282,9 @@ export function CycleDemo() {
       {/* Progress */}
       <div className="px-5 pt-5">
         <div className="mb-2 flex items-center justify-between">
-          <span className="text-sm text-white/45">
-            Sprint Progress
-          </span>
+          <span className="text-sm text-white/45">Sprint Progress</span>
 
-          <span className="text-sm font-medium text-white">
-            17 / 25
-          </span>
+          <span className="text-sm font-medium text-white">17 / 25</span>
         </div>
 
         <div className="h-2 overflow-hidden rounded-full bg-white/8">
@@ -324,33 +295,21 @@ export function CycleDemo() {
       {/* Stats */}
       <div className="grid grid-cols-3 gap-3 px-5 py-6">
         <div>
-          <p className="text-xs text-white/40">
-            Completed
-          </p>
+          <p className="text-xs text-white/40">Completed</p>
 
-          <p className="mt-1 text-xl font-semibold text-white">
-            17
-          </p>
+          <p className="mt-1 text-xl font-semibold text-white">17</p>
         </div>
 
         <div>
-          <p className="text-xs text-white/40">
-            Active
-          </p>
+          <p className="text-xs text-white/40">Active</p>
 
-          <p className="mt-1 text-xl font-semibold text-white">
-            6
-          </p>
+          <p className="mt-1 text-xl font-semibold text-white">6</p>
         </div>
 
         <div>
-          <p className="text-xs text-white/40">
-            Blocked
-          </p>
+          <p className="text-xs text-white/40">Blocked</p>
 
-          <p className="mt-1 text-xl font-semibold text-white">
-            2
-          </p>
+          <p className="mt-1 text-xl font-semibold text-white">2</p>
         </div>
       </div>
 
@@ -362,13 +321,9 @@ export function CycleDemo() {
             className="flex items-center justify-between px-5 py-3 transition-colors hover:bg-white/[0.02]"
           >
             <div>
-              <p className="font-mono text-[11px] text-white/35">
-                {issue.id}
-              </p>
+              <p className="font-mono text-[11px] text-white/35">{issue.id}</p>
 
-              <p className="mt-1 text-sm text-white/75">
-                {issue.title}
-              </p>
+              <p className="mt-1 text-sm text-white/75">{issue.title}</p>
             </div>
 
             <div
@@ -376,8 +331,8 @@ export function CycleDemo() {
                 issue.status === "done"
                   ? "bg-emerald-400"
                   : issue.status === "active"
-                  ? "bg-accent"
-                  : "bg-white/20"
+                    ? "bg-accent"
+                    : "bg-white/20"
               }`}
             />
           </div>
@@ -386,7 +341,6 @@ export function CycleDemo() {
     </div>
   );
 }
-
 
 const inbox = [
   {
@@ -419,9 +373,7 @@ export function InboxDemo() {
             Inbox
           </p>
 
-          <h4 className="mt-1 font-semibold text-white">
-            Incoming Work
-          </h4>
+          <h4 className="mt-1 font-semibold text-white">Incoming Work</h4>
         </div>
 
         <div className="rounded-full bg-white/[0.04] px-3 py-1 text-xs text-white/60">
@@ -435,23 +387,16 @@ export function InboxDemo() {
           <div
             key={item.id}
             className={`flex items-center justify-between px-5 py-4 transition-colors hover:bg-white/[0.02] ${
-              index !== inbox.length - 1 &&
-              "border-b border-white/6"
+              index !== inbox.length - 1 && "border-b border-white/6"
             }`}
           >
             <div className="flex items-start gap-3">
-              <div
-                className={`mt-2 h-2.5 w-2.5 rounded-full ${item.color}`}
-              />
+              <div className={`mt-2 h-2.5 w-2.5 rounded-full ${item.color}`} />
 
               <div>
-                <p className="font-mono text-[11px] text-white/35">
-                  {item.id}
-                </p>
+                <p className="font-mono text-[11px] text-white/35">{item.id}</p>
 
-                <p className="mt-1 text-sm text-white/80">
-                  {item.title}
-                </p>
+                <p className="mt-1 text-sm text-white/80">{item.title}</p>
               </div>
             </div>
 
@@ -464,9 +409,7 @@ export function InboxDemo() {
 
       {/* Footer */}
       <div className="flex items-center justify-between border-t border-white/6 px-5 py-4">
-        <span className="text-sm text-white/45">
-          Auto triage
-        </span>
+        <span className="text-sm text-white/45">Auto triage</span>
 
         <span className="text-sm font-medium text-emerald-400">
           98% classified
@@ -475,7 +418,6 @@ export function InboxDemo() {
     </div>
   );
 }
-
 
 import {
   Check,
@@ -540,10 +482,7 @@ export function GitDemo() {
             const Icon = item.icon;
 
             return (
-              <div
-                key={item.title}
-                className="group flex items-start gap-4"
-              >
+              <div key={item.title} className="group flex items-start gap-4">
                 <div
                   className={`relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
                     item.success
@@ -585,9 +524,7 @@ export function GitDemo() {
       <div className="border-t border-white/6 px-5 py-4">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-xs text-white/35">
-              Linked branch
-            </p>
+            <p className="text-xs text-white/35">Linked branch</p>
 
             <p className="mt-1 font-mono text-sm text-white/75">
               feat/eng-142-webhook-retries
@@ -595,13 +532,9 @@ export function GitDemo() {
           </div>
 
           <div className="text-right">
-            <p className="text-xs text-white/35">
-              Deployment
-            </p>
+            <p className="text-xs text-white/35">Deployment</p>
 
-            <p className="mt-1 font-semibold text-emerald-400">
-              Production
-            </p>
+            <p className="mt-1 font-semibold text-emerald-400">Production</p>
           </div>
         </div>
       </div>

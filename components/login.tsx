@@ -1,164 +1,206 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { Button } from './ui/button'
-import { Input } from './ui/input'
-import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from './ui/input-otp'
-import { REGEXP_ONLY_DIGITS } from 'input-otp'
-import { Field } from './ui/field'
-import { Loader2 } from 'lucide-react'
-import { delay } from '@/lib/utils'
-import { useRouter } from 'next/navigation'
+import { useState } from "react";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "./ui/input-otp";
+import { REGEXP_ONLY_DIGITS } from "input-otp";
+import { Field } from "./ui/field";
+import { Loader2 } from "lucide-react";
+import { delay } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export function Login() {
-    const router = useRouter();
-    const [email, setEmail] = useState('')
-    const [otp, setOtp] = useState('')
-    const [otpSent, setOtpSent] = useState(false)
-    const [loading, setLoading] = useState(false)
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
+  const [otpSent, setOtpSent] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-    const sendEmail = async () => {
-        try {
-            setLoading(true)
+  const sendEmail = async () => {
+    try {
+      setLoading(true);
 
-            const response = await fetch(
-                `${process.env.NEXT_PUBLIC_USER_SERVICE_URL}/user/auth/login/email`,
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        email,
-                    }),
-                }
-            )
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_USER_SERVICE_URL}/user/auth/login/email`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+          }),
+        },
+      );
 
-            if (!response.ok) {
-                throw new Error('Failed to send OTP')
-            }
+      if (!response.ok) {
+        throw new Error("Failed to send OTP");
+      }
 
-            setOtpSent(true)
-        } catch (error) {
-            console.error(error)
-        } finally {
-            setLoading(false)
-        }
+      setOtpSent(true);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    const verifyOtp = async (value: string) => {
-        try {
-            setLoading(true)
+  const verifyOtp = async (value: string) => {
+    try {
+      setLoading(true);
 
-            await delay(300)
-        const response = await fetch(
-                `${process.env.NEXT_PUBLIC_USER_SERVICE_URL}/user/auth/validate/email`,
-                {
-                    method: 'POST',
-                    credentials: "include",
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        email,
-                        otp: value
-                    }),
-                }
-            )
+      await delay(300);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_USER_SERVICE_URL}/user/auth/validate/email`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            otp: value,
+          }),
+        },
+      );
 
-            if (!response.ok) {
-                throw new Error('Failed to send OTP')
-            }
+      if (!response.ok) {
+        throw new Error("Failed to send OTP");
+      }
 
-            const data = await response.json();
-            if(data.user) {
-                localStorage.setItem("user", JSON.stringify(data.user));
-                router.push('/workspace')
-
-            }
-        } catch (error) {
-            console.error(error)
-        } finally {
-             setLoading(false);
-        }
+      const data = await response.json();
+      if (data.user) {
+        localStorage.setItem("user", JSON.stringify(data.user));
+        router.push("/workspace");
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
+  };
 
+  return (
+    <main className="flex items-center w-full h-dvh justify-center px-6">
+      <div className="w-full max-w-sm md:max-w-xs md:px-4 mb-10">
+        <h3 className="text-center text-slate-300 mb-6 text-2xl md:text-lg font-semibold">
+          {otpSent
+            ? `Enter the code sent to ${email}`
+            : "What's your email address?"}
+        </h3>
+        {!otpSent ? (
+          <Input
+            placeholder="Enter your email address..."
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            autoFocus
+            className="py-7 md:py-6 w-full placeholder:text-sm bg-transparent"
+          />
+        ) : (
+          <div className="flex justify-center">
+            <Field className="w-fit my-2">
+              <InputOTP
+                id="digits-only"
+                maxLength={6}
+                pattern={REGEXP_ONLY_DIGITS}
+                value={otp}
+                onChange={(otp) => {
+                  setOtp(otp);
 
-    return (
-        <main className="flex items-center w-full h-dvh justify-center px-6">
-            <div className="w-full max-w-sm md:max-w-xs md:px-4 mb-10">
-                <h3 className="text-center text-slate-300 mb-6 text-2xl md:text-lg font-semibold">
-                    {otpSent
-                        ? `Enter the code sent to ${email}`
-                        : "What's your email address?"}
-                </h3>
-                {!otpSent ? (
-                  <Input placeholder="Enter your email address..."
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    autoFocus className="py-7 md:py-6 w-full placeholder:text-sm bg-transparent" />
-                ) : (
-                    <div className="flex justify-center">
-                        <Field className="w-fit my-2">
-                            <InputOTP id="digits-only" maxLength={6} pattern={REGEXP_ONLY_DIGITS} value={otp}
-                            onChange={(otp) => {
-                                setOtp(otp)
+                  if (otp.length == 6) {
+                    verifyOtp(otp);
+                  }
+                }}
+              >
+                <InputOTPGroup>
+                  <InputOTPSlot
+                    index={0}
+                    className="h-16 w-14 md:h-12 md:w-10 text-2xl"
+                  />
+                  <InputOTPSlot
+                    index={1}
+                    className="h-16 w-14 md:h-12 md:w-10 text-2xl"
+                  />
+                  <InputOTPSlot
+                    index={2}
+                    className="h-16 w-14 md:h-12 md:w-10 text-2xl"
+                  />
+                </InputOTPGroup>
+                <InputOTPSeparator />
+                <InputOTPGroup>
+                  <InputOTPSlot
+                    index={3}
+                    className="h-16 w-14 md:h-12 md:w-10 text-2xl"
+                  />
+                  <InputOTPSlot
+                    index={4}
+                    className="h-16 w-14 md:h-12 md:w-10 text-2xl"
+                  />
+                  <InputOTPSlot
+                    index={5}
+                    className="h-16 w-14 md:h-12 md:w-10 text-2xl"
+                  />
+                </InputOTPGroup>
+              </InputOTP>
+            </Field>
+          </div>
+        )}
 
-                                if(otp.length == 6) {
-                                    verifyOtp(otp)
-                                }
-                            }}> 
-                                <InputOTPGroup>
-                                    <InputOTPSlot index={0} className="h-16 w-14 md:h-12 md:w-10 text-2xl" />
-                                    <InputOTPSlot index={1} className="h-16 w-14 md:h-12 md:w-10 text-2xl" />
-                                    <InputOTPSlot index={2} className="h-16 w-14 md:h-12 md:w-10 text-2xl" />
-                                </InputOTPGroup>
-                                <InputOTPSeparator />
-                                <InputOTPGroup>
-                                    <InputOTPSlot index={3} className="h-16 w-14 md:h-12 md:w-10 text-2xl" />
-                                    <InputOTPSlot index={4} className="h-16 w-14 md:h-12 md:w-10 text-2xl" />
-                                    <InputOTPSlot index={5} className="h-16 w-14 md:h-12 md:w-10 text-2xl" />
-                                </InputOTPGroup>
-                            </InputOTP>
-                        </Field >
-                    </div>
-                )}
+        <div className="flex flex-col mt-4 gap-3">
+          {!otpSent ? (
+            <Button
+              className="py-7 md:py-5 text-gray-300 text-md md:text-sm rounded-full"
+              variant="secondary"
+              onClick={sendEmail}
+              disabled={loading || !email}
+            >
+              {loading ? "Sending..." : "Continue with email"}
+            </Button>
+          ) : (
+            <Button
+              className="py-6 md:py-5 text-gray-300 text-md md:text-sm rounded-full"
+              variant="secondary"
+              onClick={() => verifyOtp(otp)}
+              disabled={otp.length !== 6}
+            >
+              Verify OTP {loading && <Loader2 className="animate-spin" />}
+            </Button>
+          )}
 
-                <div className="flex flex-col mt-4 gap-3">
-                    {!otpSent ? (
-                        <Button
-                            className="py-7 md:py-5 text-gray-300 text-md md:text-sm rounded-full"
-                            variant="secondary"
-                            onClick={sendEmail}
-                            disabled={loading || !email}
-                        >
-                            {loading ? 'Sending...' : 'Continue with email'}
-                        </Button>
-                    ) : (
-                        <Button
-                            className="py-6 md:py-5 text-gray-300 text-md md:text-sm rounded-full"
-                            variant="secondary"
-                            onClick={() => verifyOtp(otp)}
-                            disabled={otp.length !== 6}
-                        >
-                            Verify OTP {loading && <Loader2 className='animate-spin' />}
-                        </Button>
-                    )}
+          <div className="flex items-center justify-center">
+            {!otpSent && (
+              <Link href={"/"}>
+                <Button variant={"link"} className="text-sm md:text-xs">
+                  Back
+                </Button>
+              </Link>
+            )}
+          </div>
 
-                    <Button
-                        variant="link"
-                        className="text-sm md:text-xs"
-                        onClick={() => {
-                            if (otpSent) {
-                                setOtpSent(false)
-                                setOtp('')
-                            }
-                        }}
-                    >
-                        {otpSent ? 'Change email' : 'Back to login'}
-                    </Button>
-                </div>
-            </div>
-        </main>
-    )
+          {otpSent && (
+              <Button
+                variant="secondary"
+              className="py-7 md:py-5 text-gray-300 text-md md:text-sm rounded-full"
+                onClick={() => {
+                  if (otpSent) {
+                    setOtpSent(false);
+                    setOtp("");
+                  }
+                }}
+              >
+                Change email
+              </Button>
+          )}
+        </div>
+      </div>
+    </main>
+  );
 }

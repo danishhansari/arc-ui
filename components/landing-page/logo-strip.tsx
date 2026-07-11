@@ -84,14 +84,14 @@ export function LogoStrip() {
         </div>
 
         <div className="relative overflow-hidden lg:hidden">
-          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-linear-to-r from-background to-transparent" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-linear-to-r from-background to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12" />
 
           <div className="flex w-max animate-logo-strip">
             {[...companies, ...companies].map((company, i) => (
               <div key={`${company}-${i}`} className="flex items-center">
                 {i !== 0 && (
-                  <div className="mx-6 h-1 w-1 rounded-full bg-white/15" />
+                  <div className="mx-6 h-1 w-1 rounded-full" />
                 )}
 
                 <span className="text-lg font-semibold text-white/45 transition-colors duration-300 hover:text-white">

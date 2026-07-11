@@ -24,7 +24,7 @@ export async function createWorkspaceAction(data: {
       },
       body: JSON.stringify(data),
       cache: "no-store",
-    }
+    },
   );
 
   if (!response.ok) {
@@ -35,9 +35,7 @@ export async function createWorkspaceAction(data: {
   return serverResponse;
 }
 
-export async function existsWorkspaceUrl(data: {
-  url: string;
-}) {
+export async function existsWorkspaceUrl(data: { url: string }) {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
   if (!token) {
@@ -54,16 +52,16 @@ export async function existsWorkspaceUrl(data: {
       },
       body: JSON.stringify(data),
       cache: "no-store",
-    }
+    },
   );
 
   if (!response.ok) {
     const message = await response.json();
-    console.log(message)
+    console.log(message);
     throw new Error("Failed to get response is exists or not");
   }
   const serverResponse = await response.json();
-  console.log(serverResponse)
+  console.log(serverResponse);
   return serverResponse;
 }
 
@@ -85,7 +83,7 @@ export async function createWorkspaceMemberAction(data: OnboardingData) {
       },
       body: JSON.stringify(data),
       cache: "no-store",
-    }
+    },
   );
 
   if (!response.ok) {
@@ -95,7 +93,6 @@ export async function createWorkspaceMemberAction(data: OnboardingData) {
   const serverResponse = await response.json();
   return serverResponse;
 }
-
 
 export async function getActiveWorkspaceSummaryAction() {
   const cookieStore = await cookies();
@@ -114,8 +111,13 @@ export async function getActiveWorkspaceSummaryAction() {
         Authorization: `Bearer ${token}`,
       },
       cache: "no-store",
-    }
+    },
   );
+
+  if (response.status === 204) {
+    return;
+  }
+
   if (!response.ok) {
     const message = await response.json();
     throw new Error(message || "Failed to create workspace");
@@ -141,7 +143,7 @@ export async function getWorkspaceSummaryAction() {
         Authorization: `Bearer ${token}`,
       },
       cache: "no-store",
-    }
+    },
   );
   if (!response.ok) {
     const message = await response.json();
@@ -168,7 +170,7 @@ export async function logoutAction() {
         Authorization: `Bearer ${token}`,
       },
       cache: "no-store",
-    }
+    },
   );
 
   if (!response.ok) {
@@ -195,9 +197,9 @@ export async function updateWorkspaceAction(workspaceId: string) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({workspaceId, active: true}),
+      body: JSON.stringify({ workspaceId, active: true }),
       cache: "no-store",
-    }
+    },
   );
 
   if (!response.ok) {

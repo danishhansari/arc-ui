@@ -1,17 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const PUBLIC_ROUTES = ["/login", "/"];
+const PUBLIC_ROUTES = ["/", "/login"];
 
 export async function proxy(request: NextRequest) {
-  const pathname = request.nextUrl.pathname;
-
-  if (PUBLIC_ROUTES.includes(pathname)) {
-    return NextResponse.next();
-  }
-
+  const { pathname } = request.nextUrl;
   const token = request.cookies.get("token")?.value;
 
   if (!token) {
+    if (PUBLIC_ROUTES.includes(pathname)) {
+      return NextResponse.next();
+    }
+
     return NextResponse.redirect(new URL("/", request.url));
   }
 
@@ -23,19 +22,27 @@ export async function proxy(request: NextRequest) {
           Authorization: `Bearer ${token}`,
         },
         cache: "no-store",
-      },
+      }
     );
 
     if (!response.ok) {
-      return NextResponse.redirect(new URL("/login", request.url));
+      const res = NextResponse.redirect(new URL("/", request.url));
+      res.cookies.delete("token"); 
+      return res;
+    }
+
+    if (pathname === "/") {
+      return NextResponse.redirect(new URL("/workspace", request.url));
     }
 
     return NextResponse.next();
   } catch {
-    return NextResponse.redirect(new URL("/login", request.url));
+    const res = NextResponse.redirect(new URL("/", request.url));
+    res.cookies.delete("token");
+    return res;
   }
 }
 
 export const config = {
-  matcher: ["/((?!login|api|_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };

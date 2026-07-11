@@ -1,9 +1,10 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export function CTA() {
   return (
-    <section className="border-t border-white/6 py-40">
+    <section className="border-t border-white/6 py-30">
       <div className="container">
         <div className="mx-auto flex max-w-5xl flex-col items-center text-center">
           <p className="text-xs uppercase tracking-[0.35em] text-white/35">
@@ -22,21 +23,15 @@ export function CTA() {
           </p>
 
           <div className="mt-14 flex flex-wrap items-center justify-center gap-4">
-            <Button size="lg" className="h-12 rounded-xl px-7">
-              Start your first cycle
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-
-            <Button
-              variant="ghost"
-              size="lg"
-              className="h-12 rounded-xl text-white/60 hover:bg-transparent hover:text-white"
-            >
-              Book a demo
-            </Button>
+            <Link href={"/login"}>
+              <Button size="lg" className="h-12 rounded-xl px-7">
+                Start your first cycle
+                <ArrowRight className="ml-0.5 h-4 w-4" />
+              </Button>
+            </Link>
           </div>
 
-          <div className="mt-14 flex flex-wrap items-center justify-center gap-8 text-sm text-white/35">
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-8 text-sm text-white/35">
             <span>No credit card</span>
             <span>Free migration</span>
             <span>Cancel anytime</span>

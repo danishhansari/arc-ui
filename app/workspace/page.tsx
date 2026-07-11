@@ -1,4 +1,4 @@
-import { WorkspaceSummary } from "@/components/workspace-summary";
+import WorkspaceSummary  from "@/components/workspace-summary";
 
 export default function Workspace() {
     return (
