@@ -8,7 +8,6 @@ export default function() {
     return (
         <>
         <Logout />
-            Hi there
         </>
     )
 }

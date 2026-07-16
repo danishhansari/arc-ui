@@ -102,7 +102,7 @@ export function Login() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             autoFocus
-            className="py-7 md:py-6 w-full placeholder:text-sm bg-transparent"
+            className="py-6 md:py-6 w-full placeholder:text-sm bg-transparent border-ring/50"
           />
         ) : (
           <div className="flex justify-center">
@@ -123,30 +123,37 @@ export function Login() {
                 <InputOTPGroup>
                   <InputOTPSlot
                     index={0}
-                    className="h-16 w-14 md:h-12 md:w-10 text-2xl"
-                  />
-                  <InputOTPSlot
-                    index={1}
-                    className="h-16 w-14 md:h-12 md:w-10 text-2xl"
-                  />
-                  <InputOTPSlot
-                    index={2}
-                    className="h-16 w-14 md:h-12 md:w-10 text-2xl"
+                    className="h-10 w-9 text-2xl mr-2"
                   />
                 </InputOTPGroup>
-                <InputOTPSeparator />
+                <InputOTPGroup>
+                  <InputOTPSlot
+                    index={1}
+                    className="h-10 w-9 text-2xl mr-2"
+                  />
+                </InputOTPGroup>
+                <InputOTPGroup>
+                  <InputOTPSlot
+                    index={2}
+                    className="h-10 w-9 text-2xl mr-2"
+                  />
+                </InputOTPGroup>
                 <InputOTPGroup>
                   <InputOTPSlot
                     index={3}
-                    className="h-16 w-14 md:h-12 md:w-10 text-2xl"
+                    className="h-10 w-9 text-2xl mr-2"
                   />
+                </InputOTPGroup>
+                <InputOTPGroup>
                   <InputOTPSlot
                     index={4}
-                    className="h-16 w-14 md:h-12 md:w-10 text-2xl"
+                    className="h-10 w-9 text-2xl mr-2"
                   />
+                </InputOTPGroup>
+                <InputOTPGroup>
                   <InputOTPSlot
                     index={5}
-                    className="h-16 w-14 md:h-12 md:w-10 text-2xl"
+                    className="h-10 w-9 text-2xl mr-2"
                   />
                 </InputOTPGroup>
               </InputOTP>
@@ -157,7 +164,7 @@ export function Login() {
         <div className="flex flex-col mt-4 gap-3">
           {!otpSent ? (
             <Button
-              className="py-7 md:py-5 text-gray-300 text-md md:text-sm rounded-full"
+              className="py-7 md:py-6 mt-2 text-gray-300 text-md md:text-sm rounded-full"
               variant="secondary"
               onClick={sendEmail}
               disabled={loading || !email}
@@ -186,18 +193,18 @@ export function Login() {
           </div>
 
           {otpSent && (
-              <Button
-                variant="secondary"
+            <Button
+              variant="secondary"
               className="py-7 md:py-5 text-gray-300 text-md md:text-sm rounded-full"
-                onClick={() => {
-                  if (otpSent) {
-                    setOtpSent(false);
-                    setOtp("");
-                  }
-                }}
-              >
-                Change email
-              </Button>
+              onClick={() => {
+                if (otpSent) {
+                  setOtpSent(false);
+                  setOtp("");
+                }
+              }}
+            >
+              Change email
+            </Button>
           )}
         </div>
       </div>
