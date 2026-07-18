@@ -24,3 +24,48 @@ export const stats = [
     label: "Fewer standups reported",
   },
 ];
+
+import {
+  Inbox,
+  CircleDot,
+  FolderKanban,
+  RefreshCw,
+  Map,
+  Users,
+  Bookmark,
+  FileText,
+  Settings,
+} from "lucide-react";
+
+
+export const navigation = [
+  {
+    label: "Favorites",
+    items: [
+      { title: "Inbox", href: "/inbox", icon: Inbox },
+      { title: "My Issues", href: "/issues", icon: CircleDot },
+    ],
+  },
+  {
+    label: "Planning",
+    items: [
+      { title: "Projects", href: "/projects", icon: FolderKanban },
+      { title: "Cycles", href: "/cycles", icon: RefreshCw },
+      { title: "Roadmap", href: "/roadmap", icon: Map },
+    ],
+  },
+  {
+    label: "Workspace",
+    items: [
+      { title: "Teams", href: "/teams", icon: Users },
+      { title: "Views", href: "/views", icon: Bookmark },
+      { title: "Documents", href: "/documents", icon: FileText },
+    ],
+  },
+  {
+    label: "Administration",
+    items: [
+      { title: "Settings", href: "/settings", icon: Settings },
+    ],
+  },
+];

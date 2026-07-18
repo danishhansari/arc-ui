@@ -38,6 +38,7 @@ import { Skeleton } from "../ui/skeleton";
    const updateWorkspace = async (workspaceId: string) => {
      try {
        const response = await updateWorkspaceAction(workspaceId);
+       localStorage.setItem("organization", JSON.stringify(response));
        router.push(response.name)
      } catch (e) {
        console.error(e);
