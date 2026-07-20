@@ -110,7 +110,9 @@ export async function getActiveWorkspaceSummaryAction() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      cache: "no-store",
+      next: {
+        revalidate: 3600
+      }
     },
   );
 

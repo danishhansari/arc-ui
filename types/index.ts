@@ -18,6 +18,13 @@ export interface WorkspaceSummaryType {
     workspaceMembers: number;
 };
 
+export interface WorkspaceType {
+    id: string;
+    name: string;
+    url: string;
+    workspaceCreator: string;
+};
+
 export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export type Status = "backlog" | "todo" | "progress" | "done";

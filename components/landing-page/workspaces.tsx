@@ -13,6 +13,7 @@
  import { useRouter } from "next/navigation";
 import { Logout } from "../logout";
 import { Skeleton } from "../ui/skeleton";
+import { getInitials } from "@/lib/utils";
 
  export const Workspaces = () => {
    const [workspaces, setWorkspaces] = useState<WorkspaceSummaryType[]>([]);
@@ -45,19 +46,9 @@ import { Skeleton } from "../ui/skeleton";
      }
    };
 
-   const getInitials = (name: string) =>
-     name
-       .split(" ")
-       .map((word) => word[0])
-       .join("")
-       .toUpperCase()
-       .slice(0, 2);
-
    return (
      <section className="flex h-full flex-col">
        <Logout />
-
-
          <div className="flex h-[80vh] items-center justify-center">
            <div>
              <p className="text-2xl font-medium">
