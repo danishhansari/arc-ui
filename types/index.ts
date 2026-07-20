@@ -38,3 +38,12 @@ export interface Issue {
   assignee: string;
   color: string;
 }
+
+export interface UserType {
+    companyName: string | null;
+    createdAt: string;
+    email: string;
+    id: string;
+    mobileNumber: string | null;
+    updatedAt: string;
+}

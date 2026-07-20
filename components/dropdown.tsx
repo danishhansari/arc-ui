@@ -8,17 +8,38 @@ import {
   DropdownMenuLabel,
   DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { getInitials } from "@/lib/utils";
-import { ChevronDown } from "lucide-react";
+import { Check, ChevronDown } from "lucide-react";
 import { Button } from "./ui/button";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { logoutAction } from "@/app/actions";
 
-export function DropdownMenuDemo({ name }: { name: string }) {
+export function OrganizationDropdown({
+  name,
+  email,
+}: {
+  name: string;
+  email: string;
+}) {
+  const router = useRouter();
+
+  const logout = async () => {
+    try {
+      await logoutAction();
+      localStorage.removeItem("user");
+      localStorage.removeItem("organization");
+      router.push("/");
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="outline-none">
@@ -44,14 +65,31 @@ export function DropdownMenuDemo({ name }: { name: string }) {
             <DropdownMenuSubTrigger>Switch workspace</DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent className="ml-0.5 -mt-6">
-                <DropdownMenuItem>Email</DropdownMenuItem>
-                <DropdownMenuItem>Message</DropdownMenuItem>
+                <DropdownMenuLabel>{email}</DropdownMenuLabel>
+                <DropdownMenuItem className="bg-accent flex items-center justify-between">
+                  <div className="flex gap-2">
+                    <div className="flex h-4.5 w-4.5 text-xs rounded-full items-center justify-center bg-blue-500 font-semibold text-white">
+                      {getInitials(name)}
+                    </div>
+                    {name}
+                  </div>
+                  <div>
+                    <Check />
+                  </div>
+                </DropdownMenuItem>
+                <DropdownMenuLabel>Account</DropdownMenuLabel>
+                <DropdownMenuItem>
+                  <Link href={"/workspace/create"}>
+                    Create or join a workspace...
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>Add an account...</DropdownMenuItem>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
         </DropdownMenuGroup>
         <DropdownMenuGroup>
-          <DropdownMenuItem>Log out</DropdownMenuItem>
+          <DropdownMenuItem onClick={logout}>Log out</DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>

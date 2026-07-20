@@ -11,23 +11,29 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { navigation } from "@/lib/constants";
-import { WorkspaceType } from "@/types";
+import { UserType, WorkspaceType } from "@/types";
 import { useEffect, useState } from "react";
-import { DropdownMenuDemo } from "@/components/dropdown";
+import { OrganizationDropdown } from "@/components/dropdown";
 
 export function AppSidebar() {
   const pathname = usePathname();
   const [organization, setOrganization] = useState<WorkspaceType | null>(null);
+  const [user, setUser] = useState<UserType | null>(null);
+
 
   useEffect(() => {
     const organizationObj = localStorage.getItem("organization");
+    const userObj = localStorage.getItem("user");
 
     if (organizationObj) {
       setOrganization(JSON.parse(organizationObj));
     }
+    if (userObj) {
+      setUser(JSON.parse(userObj));
+    }
   }, []);
 
-  if (!organization) {
+  if (!organization || !user) {
     return null;
   }
 
@@ -35,7 +41,7 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <DropdownMenuDemo name={organization.name} />
+          <OrganizationDropdown name={organization.name} email={user.email} />
         </SidebarGroup>
         <SidebarGroup className="-mt-4">
           <SidebarMenu className="-ml-2">
@@ -44,11 +50,11 @@ export function AppSidebar() {
                 <SidebarMenu>
                   {group.items.map((item) => {
                     const Icon = item.icon;
-                    const link ='/' + organization.name + item.href;
+                    const link = "/" + organization.name + item.href;
                     return (
                       <SidebarMenuItem key={item.href}>
                         <SidebarMenuButton
-                          className={`text-xs font-sans rounded-sm text-zinc-400 hover:font-semibold ${pathname === link ? "font-semibold": ""}`}
+                          className={`text-xs font-sans rounded-sm text-zinc-400 hover:font-semibold ${pathname === link ? "font-semibold" : ""}`}
                           asChild
                           isActive={pathname === link}
                         >
