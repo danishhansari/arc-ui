@@ -8,6 +8,8 @@ import { Stats } from "@/components/landing-page/stats";
 import { Testimonial } from "@/components/landing-page/testimonial";
 import { WorkflowSection } from "@/components/landing-page/workflow";
 
+
+export const revalidate = 360000;
 export default function Home() {
   return (
     <>
